@@ -3,11 +3,12 @@ const QUOTE = '(["\'])((?:(?=(\\\\?))\\7.)*?)\\5';
 const QUERY = '^(' + MATCH + ')|^#(-?' + MATCH + ')|^\\.(-?' + MATCH + ')|^\\[(-?' + MATCH + ')(?:=' + QUOTE + ')?\\]|^' + QUOTE.replace(5, 8).replace(7, 10) + '|^\\s*([<+-]+)\\s*|^\\s*(\\s+|>)\\s*';
 
 export default function createNode(selector) {
+	let reducable = selector;
 	let root = this.createElement('div');
 	let node = root;
 	let match;
 
-	while (match = selector && selector.match(QUERY)) {
+	while (match = reducable && reducable.match(QUERY)) {
 		// element
 		if (match[1]) {
 			let temp = this.createElement(match[1]);
@@ -78,7 +79,7 @@ export default function createNode(selector) {
 			node = node.appendChild(this.createElement('div'));
 		}
 
-		selector = selector.slice(match[0].length);
+		reducable = reducable.slice(match[0].length);
 	}
 
 	return root;

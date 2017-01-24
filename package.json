@@ -8,51 +8,41 @@
   "homepage": "https://github.com/jonathantneal/dom-create-node#readme",
   "bugs": "https://github.com/jonathantneal/dom-create-node/issues",
   "main": "index.js",
-  "jsnext:main": "index.es6",
+  "module": "index.es6",
   "files": [
+    "index.es6",
     "index.js"
   ],
   "scripts": {
-    "lint": "echint -c node_modules/editor-config-10up/.editorconfig && eslint index.es6 && jscs index.es6",
+    "lint": "npm run lint:ec && npm run lint:js",
+    "lint:ec": "echint",
+    "lint:js": "eslint *.es6 --cache --ignore-pattern .gitignore",
     "build": "rollup -c .rollup.js",
     "prepublish": "npm run test",
     "tape": "node .tape.js",
     "test": "npm run build && npm run lint && npm run tape"
   },
   "engines": {
-    "node": ">=6.9.1"
+    "node": ">=6.5.0"
   },
   "devDependencies": {
     "babel-plugin-external-helpers": "^6.18.0",
     "babel-preset-es2015": "^6.18.0",
     "echint": "^2.0.0",
-    "editor-config-10up": "github:jonathantneal/editor-config-10up",
+    "echint-config-dev": "^1.0.0",
     "eslint": "^3.11.0",
-    "eslint-config-10up": "github:jonathantneal/eslint-config-10up",
-    "jscs": "^3.0.7",
-    "jscs-config-10up": "github:jonathantneal/jscs-config-10up",
+    "eslint-config-dev": "^1.0.0",
     "pre-commit": "^1.1.3",
     "rollup": "^0.36.4",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-uglify": "^1.0.1",
     "xmldom": "^0.1.27"
   },
-  "eslintConfig": {
-    "extends": "10up",
-    "parserOptions": {
-      "sourceType": "module"
-    },
-    "rules": {
-      "no-cond-assign": [
-        0
-      ],
-      "no-param-reassign": [
-        0
-      ]
-    }
+  "echint": {
+    "extends": "dev"
   },
-  "jscsConfig": {
-    "preset": "10up"
+  "eslintConfig": {
+    "extends": "dev"
   },
   "pre-commit": [
     "lint"
